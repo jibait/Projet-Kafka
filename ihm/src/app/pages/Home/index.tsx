@@ -1,96 +1,205 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Heading, Text } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Heading,
+    Text,
+    VStack,
+    Input,
+    Flex,
+    Divider,
+    SlideFade,
+    Fade,
+} from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faGamepad,
+    faGlobe,
+    faCrown,
+    faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import NavBar from "../../components/Navbar";
-import VerticalCategory from "../../components/VerticalCategory";
-import GameGrid from "../../components/GameGrid";
-
-// Définition des types
-interface Game {
-    id: number;
-    name: string;
-    image: string;
-}
-
-interface Category {
-    title: string;
-    games: Game[];
-}
 
 const Home: React.FC = () => {
-    // Exemple de données (remplacer par des résultats d'API)
-    const topGames: Game[] = [
-        { id: 1, name: 'Game 1', image: '/images/game1.jpg' },
-        { id: 2, name: 'Game 2', image: '/images/game2.jpg' },
-    ];
-
-    const categories: Category[] = [
-        {
-            title: "Action",
-            games: [
-                { id: 3, name: 'Action Game 1', image: '/images/action1.jpg' },
-                { id: 4, name: 'Action Game 2', image: '/images/action2.jpg' },
-            ]
-        },
-        {
-            title: "RPG",
-            games: [
-                { id: 5, name: 'RPG Game 1', image: '/images/rpg1.jpg' },
-                { id: 6, name: 'RPG Game 2', image: '/images/rpg2.jpg' },
-            ]
-        }
-    ];
-
     return (
-        <Box bg="gray.900" minH="100vh" p="8">
-            <NavBar />
+        <Box>
+            {/* Section Présentation du Projet */}
+            <Box
+                height="100vh"
+                bg="gray.800"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                textAlign="center"
+                px={4}
+            >
+                <Fade in>
+                    <VStack spacing={4}>
+                        <Heading size="2xl" color="white">
+                            Twitch Analyzer
+                        </Heading>
+                        <Text color="gray.300" fontSize="lg">
+                            Découvrez les tendances en direct sur Twitch
+                        </Text>
+                        <Text color="gray.400" fontSize="md">
+                            Analyse en temps réel des statistiques des jeux, des langues et
+                            des streamers sur Twitch.
+                        </Text>
+                        <Text color="gray.300" fontSize="md" maxWidth="600px">
+                            Bienvenue sur Twitch Analyzer, la plateforme ultime qui vous
+                            permet de suivre, en temps réel, les tendances de streaming sur
+                            Twitch. Avec notre solution, accédez instantanément aux données les
+                            plus précises sur les jeux les plus populaires, les streamers les
+                            plus regardés, et les préférences linguistiques des spectateurs.
+                        </Text>
+                        <Button colorScheme="teal" size="lg" mt="4">
+                            Commencez à analyser dès maintenant
+                        </Button>
+                    </VStack>
+                </Fade>
+            </Box>
+
+            {/* Séparateur */}
+            <Divider orientation="horizontal" borderColor="gray.600" my={10} />
+
+            {/* Section Barre de recherche */}
+            <Box mb="10" textAlign="center">
+                <SlideFade in offsetY="20px">
+                    <Input
+                        placeholder="Recherchez un jeu, un streamer, ou une langue..."
+                        size="lg"
+                        color="white"
+                        bg="gray.700"
+                        border="none"
+                        _placeholder={{ color: "gray.400" }}
+                    />
+                </SlideFade>
+            </Box>
+
+            {/* Séparateur */}
+            <Divider orientation="horizontal" borderColor="gray.600" my={10} />
+
+            {/* Section Fonctionnalités principales */}
             <Box textAlign="center" mb="10">
-                <Heading size="2xl" color="white">Bienvenue sur Twitch Games Stats</Heading>
-                <Text color="gray.300" mt="4">Suivez les tendances des jeux les plus streamés en temps réel.</Text>
+                <Fade in>
+                    <Heading size="lg" color="white" mb="6">
+                        Fonctionnalités principales
+                    </Heading>
+                    <Flex
+                        justify="space-around"
+                        wrap="wrap"
+                        maxWidth="1200px"
+                        margin="0 auto"
+                    >
+                        <Feature
+                            icon={faGamepad}
+                            title="Statistiques en temps réel par jeu"
+                            description="Explorez les jeux qui captivent le plus de spectateurs à chaque instant."
+                        />
+                        <Feature
+                            icon={faGlobe}
+                            title="Statistiques par langue"
+                            description="Découvrez les préférences linguistiques des spectateurs."
+                        />
+                        <Feature
+                            icon={faCrown}
+                            title="Top Streamers par audience"
+                            description="Identifiez les streamers qui dominent actuellement la plateforme."
+                        />
+                    </Flex>
+                </Fade>
             </Box>
 
-            <Box mb="10">
-                <Heading size="lg" color="white" mb="6">Jeux les plus streamés</Heading>
-                <GameGrid games={topGames} />
+            {/* Séparateur */}
+            <Divider orientation="horizontal" borderColor="gray.600" my={10} />
+
+            {/* Section Technologie derrière Twitch Analyzer */}
+            <Box textAlign="left" mb="10" px={4}>
+                <Fade in>
+                    <Heading size="lg" color="white" mb="6">
+                        Technologie derrière Twitch Analyzer
+                    </Heading>
+                    <Text color="gray.300" mb={2}>
+                        Notre plateforme est propulsée par des technologies robustes qui
+                        garantissent une analyse rapide et fiable des données :
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Brocker d’événements</strong> - Nous utilisons Kafka pour
+                        collecter, traiter et transmettre les données en temps réel.
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Producteur de données</strong> - Nos systèmes extraient des
+                        informations brutes directement depuis l'API Twitch.
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Traitement des données</strong> - Les données sont
+                        traitées puis envoyées vers la base de données et le backend.
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Base de données</strong> - Nous utilisons MongoDB pour
+                        stocker efficacement les informations sur les jeux, les streamers
+                        et les spectateurs.
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Web Backend</strong> - Notre backend assure une
+                        communication bidirectionnelle avec le frontend.
+                    </Text>
+                    <Text color="gray.300" mb={2}>
+                        - <strong>Web Frontend</strong> - Un design intuitif et interactif
+                        pour permettre aux utilisateurs d’accéder rapidement aux
+                        statistiques recherchées.
+                    </Text>
+                </Fade>
             </Box>
 
-            <Accordion>
-                <AccordionItem>
-                    <h2>
-                        <AccordionButton>
-                            <Box as='span' flex='1' textAlign='left'>
-                                Section 1 title
-                            </Box>
-                            <AccordionIcon />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </AccordionPanel>
-                </AccordionItem>
+            {/* Séparateur */}
+            <Divider orientation="horizontal" borderColor="gray.600" my={10} />
 
-                <AccordionItem>
-                    <h2>
-                        <AccordionButton>
-                            <Box as='span' flex='1' textAlign='left'>
-                                Section 2 title
-                            </Box>
-                            <AccordionIcon />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </AccordionPanel>
-                </AccordionItem>
-            </Accordion>
-            {categories.map((category) => (
-                <VerticalCategory key={category.title} title={category.title} games={category.games} />
-            ))}
+            {/* Conclusion */}
+            <Box textAlign="center">
+                <Fade in>
+                    <Heading size="lg" color="white" mb="4">
+                        Twitch Analyzer, c’est votre fenêtre ouverte sur les tendances du
+                        streaming.
+                    </Heading>
+                    <Text color="gray.300" mb="4">
+                        Explorez, analysez et comprenez les audiences Twitch comme jamais
+                        auparavant.
+                    </Text>
+                    <Button colorScheme="teal" size="lg">
+                        Commencez à analyser dès maintenant
+                    </Button>
+                </Fade>
+            </Box>
+        </Box>
+    );
+};
+
+// Composant pour les fonctionnalités
+const Feature: React.FC<{
+    icon: any;
+    title: string;
+    description: string;
+}> = ({ icon, title, description }) => {
+    return (
+        <Box
+            bg="gray.700"
+            p="6"
+            borderRadius="md"
+            boxShadow="md"
+            width={{ base: "100%", md: "30%" }}
+            marginY={4}
+            transition="0.2s"
+            _hover={{ transform: "scale(1.05)", boxShadow: "lg" }}
+            textAlign="center"
+        >
+            <FontAwesomeIcon icon={icon} size="3x" color="teal.400" />
+            <Text fontSize="xl" color="white" fontWeight="bold" mt="3">
+                {title}
+            </Text>
+            <Text color="gray.300" mt="2">
+                {description}
+            </Text>
         </Box>
     );
 };
