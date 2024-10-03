@@ -14,9 +14,10 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
+    Link,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEdit, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEye, faChartBar, faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar: React.FC = () => {
     return (
@@ -60,15 +61,24 @@ const Navbar: React.FC = () => {
             </Box>
 
             <Flex align="center">
+                {/* Bouton Vue d'ensemble avec icône */}
+                <Link href="/overview" passHref> {/* Lien vers la page Vue d'ensemble */}
+                    <Button colorScheme="purple" size="sm" mx="2" leftIcon={<FontAwesomeIcon icon={faChartBar} />}>
+                        Vue d'ensemble
+                    </Button>
+                </Link>
+
+
+                {/* Menu Statistiques spécifiques avec icône */}
                 <Menu>
                     <MenuButton
                         as={Button}
                         size={"sm"}
                         colorScheme="purple"
-                        rightIcon={<FontAwesomeIcon icon={faEdit} />}
+                        rightIcon={<FontAwesomeIcon icon={faChevronDown} />}
                         mx="2"
                     >
-                        Statistiques des jeux
+                        Statistiques spécifiques
                     </MenuButton>
                     <MenuList>
                         <MenuItem color={"grey"}>
@@ -77,20 +87,6 @@ const Navbar: React.FC = () => {
                         <MenuItem color={"grey"}>
                             Top streamers par audience
                         </MenuItem>
-                    </MenuList>
-                </Menu>
-
-                <Menu>
-                    <MenuButton
-                        as={Button}
-                        colorScheme="purple"
-                        size={"sm"}
-                        rightIcon={<FontAwesomeIcon icon={faUser} />}
-                        mx="2"
-                    >
-                        Statistiques par langue
-                    </MenuButton>
-                    <MenuList>
                         <MenuItem color={"grey"}>
                             Spectateurs par langue
                         </MenuItem>

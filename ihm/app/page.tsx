@@ -16,7 +16,7 @@ import {
     faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import Feature from "@/app/components/Feature";
+import Feature from "./components/Feature";
 
 const Home: React.FC = () => {
     return (
