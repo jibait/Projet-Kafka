@@ -1,0 +1,219 @@
+{
+	"data": [
+		{
+			"id": "42871091176",
+			"user_id": "35630634",
+			"user_login": "dota2ti",
+			"user_name": "dota2ti",
+			"game_id": "29595",
+			"game_name": "Dota 2",
+			"type": "live",
+			"title": "Team Liquid vs. Gaimin Gladiators - Game 2 - The International 2024 - Finals",
+			"viewer_count": 255190,
+			"started_at": "2024-09-15T07:06:51Z",
+			"language": "en",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_dota2ti-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"Esports",
+				"English"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "42871111016",
+			"user_id": "35631192",
+			"user_login": "dota2ti_ru",
+			"user_name": "dota2ti_ru",
+			"game_id": "29595",
+			"game_name": "Dota 2",
+			"type": "live",
+			"title": "Team Liquid vs. Gaimin Gladiators - Игра 2 - The International 2024 - Finals",
+			"viewer_count": 211120,
+			"started_at": "2024-09-15T07:13:14Z",
+			"language": "ru",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_dota2ti_ru-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"Киберспорт",
+				"Русский"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "42871343928",
+			"user_id": "67708794",
+			"user_login": "nix",
+			"user_name": "Nix",
+			"game_id": "29595",
+			"game_name": "Dota 2",
+			"type": "live",
+			"title": "Team Liquid vs Gaimin Gladiators bo5 1:0 The International 2024: Grand Final",
+			"viewer_count": 180669,
+			"started_at": "2024-09-15T08:12:03Z",
+			"language": "ru",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_nix-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"Русский"
+			],
+			"is_mature": true
+		},
+		{
+			"id": "41596314695",
+			"user_id": "545050196",
+			"user_login": "kato_junichi0817",
+			"user_name": "うん〇ちゃん",
+			"game_id": "509658",
+			"game_name": "Just Chatting",
+			"type": "live",
+			"title": "やぁ",
+			"viewer_count": 119567,
+			"started_at": "2024-09-15T06:58:06Z",
+			"language": "ja",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kato_junichi0817-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"加藤純一",
+				"雑談",
+				"雑談歓迎",
+				"雑談〇",
+				"雑談大好き",
+				"日本語",
+				"MURASHGAMING",
+				"MRGWIN"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "42872186040",
+			"user_id": "50985620",
+			"user_login": "papaplatte",
+			"user_name": "Papaplatte",
+			"game_id": "509663",
+			"game_name": "Special Events",
+			"type": "live",
+			"title": "XXL WINCHALLENGE MIT BASTIGHG",
+			"viewer_count": 53402,
+			"started_at": "2024-09-15T10:36:18Z",
+			"language": "de",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_papaplatte-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"dumm",
+				"wer",
+				"guckt",
+				"german",
+				"Deutsch"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "41596605511",
+			"user_id": "49207184",
+			"user_login": "fps_shaka",
+			"user_name": "fps_shaka",
+			"game_id": "27471",
+			"game_name": "Minecraft",
+			"type": "live",
+			"title": "𝓛𝓮𝓽'𝓼 𝓓𝓸 𝓣𝓱𝓲𝓼...",
+			"viewer_count": 46465,
+			"started_at": "2024-09-15T09:24:49Z",
+			"language": "ja",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_fps_shaka-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"日本語"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "42871185640",
+			"user_id": "42316376",
+			"user_login": "just_ns",
+			"user_name": "just_ns",
+			"game_id": "29595",
+			"game_name": "Dota 2",
+			"type": "live",
+			"title": "СТАРПЁРХАБ | Team Liquid [1:0] Gaimin Gladiators | The International 2024 - ГРАНД ФИНАЛ Bo5 | !tg !yt !мерч @followJotM @Sunlight",
+			"viewer_count": 39674,
+			"started_at": "2024-09-15T07:35:15Z",
+			"language": "ru",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_just_ns-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"Русский"
+			],
+			"is_mature": true
+		},
+		{
+			"id": "42873062408",
+			"user_id": "121606712",
+			"user_login": "kingsleague",
+			"user_name": "kingsleague",
+			"game_id": "1863222988",
+			"game_name": "Kings League",
+			"type": "live",
+			"title": "xBuyer Team vs. Los Troncos FC ⚽ JORNADA 1 👑 Kings League InfoJobs Spain 👑#KINGSLEAGUEJ1",
+			"viewer_count": 37315,
+			"started_at": "2024-09-15T12:35:53Z",
+			"language": "es",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_kingsleague-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"KingsLeague",
+				"Español",
+				"QueensLeague",
+				"KingsWorldCup"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "41596652983",
+			"user_id": "119506529",
+			"user_login": "rader",
+			"user_name": "らっだぁ",
+			"game_id": "27471",
+			"game_name": "Minecraft",
+			"type": "live",
+			"title": "#VCRマイクラ ダンジョン攻略勢一日目",
+			"viewer_count": 37265,
+			"started_at": "2024-09-15T09:49:51Z",
+			"language": "ja",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_rader-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"日本語",
+				"ネタバレ注意",
+				"ネタバレ禁止",
+				"伝書鳩禁止"
+			],
+			"is_mature": false
+		},
+		{
+			"id": "43037906441",
+			"user_id": "181077473",
+			"user_login": "gaules",
+			"user_name": "Gaules",
+			"game_id": "32399",
+			"game_name": "Counter-Strike",
+			"type": "live",
+			"title": "Furia vs Red Canids ESL Pro League Season 20 - Siga @Gaules nas redes sociais!",
+			"viewer_count": 36128,
+			"started_at": "2024-09-15T13:31:12Z",
+			"language": "pt",
+			"thumbnail_url": "https://static-cdn.jtvnw.net/previews-ttv/live_user_gaules-{width}x{height}.jpg",
+			"tag_ids": [],
+			"tags": [
+				"Português",
+				"brazil",
+				"Portugues",
+				"Brasil"
+			],
+			"is_mature": true
+		}
+	],
+	"pagination": {
+		"cursor": "eyJiIjp7IkN1cnNvciI6ImV5SnpJam95TlRVeE9UQXVNVEl5TXprMU56STBPQ3dpWkNJNlptRnNjMlVzSW5RaU9uUnlkV1Y5In0sImEiOnsiQ3Vyc29yIjoiZXlKeklqb3pNek16TlM0eU1UUTFOalk1TkRNNE1pd2laQ0k2Wm1Gc2MyVXNJblFpT25SeWRXVjkifX0"
+	}
+}
