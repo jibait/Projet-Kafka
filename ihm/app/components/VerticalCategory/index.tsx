@@ -1,7 +1,7 @@
 import { Heading, Stack } from "@chakra-ui/react";
 import React from "react";
-import GameGrid from "../GameGrid";
-import { Game } from "@/app/interfaces/Game";
+import { Game } from "../../interfaces/Game";
+import GameCarousel from "../GameCarousel";
 
 // Définition du type pour les catégories
 interface VerticalCategoryProps {
@@ -10,9 +10,9 @@ interface VerticalCategoryProps {
 }
 
 const VerticalCategory: React.FC<VerticalCategoryProps> = ({ title, games }) => (
-    <Stack mb="8">
+    <Stack mb="8" mt="4">
         <Heading size="lg" color="white" mb="4">{title}</Heading>
-        <GameGrid games={games} />
+        <GameCarousel games={games} />
     </Stack>
 );
 

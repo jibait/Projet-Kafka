@@ -17,7 +17,7 @@ import {
     Link,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faEye, faChartBar, faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar: React.FC = () => {
     return (
@@ -32,13 +32,15 @@ const Navbar: React.FC = () => {
             top="0"
             zIndex="1000"
         >
-            <Image
-                src="/twitch-analyzer.png"
-                alt="Logo"
-                objectFit="contain"
-                width="100%"
-                maxWidth="150px"
-            />
+            <Link href="/">
+                <Image
+                    src="/twitch-analyzer.png"
+                    alt="Logo"
+                    objectFit="contain"
+                    width="100%"
+                    maxWidth="150px"
+                />
+            </Link>
 
             <Box flexGrow={1} mx="4">
                 <InputGroup size="md" width={{ base: "120px", md: "550px" }} mx="auto">
@@ -54,7 +56,7 @@ const Navbar: React.FC = () => {
                             aria-label="Search"
                             icon={<FontAwesomeIcon icon={faSearch} />}
                             variant="link"
-                            colorScheme="teal"
+                            colorScheme="purple"
                         />
                     </InputRightElement>
                 </InputGroup>
@@ -62,7 +64,7 @@ const Navbar: React.FC = () => {
 
             <Flex align="center">
                 {/* Bouton Vue d'ensemble avec icône */}
-                <Link href="/overview" passHref> {/* Lien vers la page Vue d'ensemble */}
+                <Link href="/overview"> {/* Lien vers la page Vue d'ensemble */}
                     <Button colorScheme="purple" size="sm" mx="2" leftIcon={<FontAwesomeIcon icon={faChartBar} />}>
                         Vue d'ensemble
                     </Button>

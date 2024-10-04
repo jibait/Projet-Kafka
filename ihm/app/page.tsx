@@ -7,6 +7,7 @@ import {
     Flex,
     Divider,
     Fade,
+    Link,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -65,7 +66,9 @@ const Home: React.FC = () => {
                 </Box>
                 {/* Flèche vers le bas */}
                 <Box mt={6}>
-                    <Text color="gray.300" mb={2}>En savoir plus</Text>
+                    <Link href="/overview">
+                        <Text color="gray.300" mb={2}>En savoir plus</Text>
+                    </Link>
                     <FontAwesomeIcon icon={faArrowDown} size="2x" color="white" />
                 </Box>
             </Box>
@@ -160,9 +163,11 @@ const Home: React.FC = () => {
                         Explorez, analysez et comprenez les audiences Twitch comme jamais
                         auparavant.
                     </Text>
-                    <Button colorScheme="purple" size="lg">
-                        Commencez à analyser dès maintenant
-                    </Button>
+                    <Link href="/overview">
+                        <Button colorScheme="purple" size="lg">
+                            Commencez à analyser dès maintenant
+                        </Button>
+                    </Link>
                 </Fade>
             </Box>
         </Box >

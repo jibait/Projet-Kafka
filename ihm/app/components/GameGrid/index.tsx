@@ -7,11 +7,13 @@ interface GameGridProps {
 }
 
 const GameGrid: React.FC<GameGridProps> = ({ games }) => (
-    <Grid templateColumns="repeat(auto-fill, minmax(150px, 1fr))" gap="6">
+    <Grid templateColumns="repeat(auto-fill, minmax(170px, 1fr))" gap="6">
         {games.map((game) => (
-            <Box key={game.id} bg="gray.700" borderRadius="md" overflow="hidden">
-                <Image src={game.image} alt={game.name} />
-                <Text p="2" color="white">{game.name}</Text>
+            <Box key={game.id} overflow="hidden">
+                <Box className="vignette" overflow="hidden">
+                    <Image className="vignette" src={game.image} alt={game.name} />
+                </Box>
+                <Text className={"text-vignette"} fontWeight={"bold"} pt={2} color="white">{game.name}</Text>
             </Box>
         ))}
     </Grid>
