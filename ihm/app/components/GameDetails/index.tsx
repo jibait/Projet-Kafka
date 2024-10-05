@@ -1,91 +1,43 @@
-import { Box, Flex, Image, Text, VStack, HStack, Badge, Divider, Spinner } from '@chakra-ui/react';
+import { Box, Image, Text, List, ListItem, Heading } from '@chakra-ui/react';
 import React from 'react';
 
-// Interface pour les props de GameDetails
 interface GameDetailsProps {
     gameId: string;
     game: {
         name: string;
-        cover: string; // URL de la couverture du jeu
-        audience: number; // Audience en temps réel
-        topStreamers: string[]; // Liste des meilleurs streamers
-        description: string; // Description du jeu
-        releaseDate: string; // Date de sortie du jeu
-        genres: string[]; // Genres du jeu
+        image: string;
+        audience: number;
+        topStreamers: string[];
+        description: string;
+        releaseDate: string;
+        genres: string[];
     };
 }
 
-const GameDetails: React.FC<GameDetailsProps> = ({ gameId, game }) => {
-    if (!game) {
-        // Affiche un spinner si les détails du jeu ne sont pas encore chargés
-        return (
-            <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                <Spinner size="xl" />
-            </Box>
-        );
-    }
-
+const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
     return (
-        <Box padding={6} maxW="7xl" mx="auto">
-            {/* Titre de la page */}
-            <Text fontSize="3xl" fontWeight="bold" mb={6}>
-                Détails du jeu : {game.name}
-            </Text>
+        <Box display="flex" p={5} border="1px solid" color={"white"} borderColor="gray.700" borderRadius="lg">
+            {/* Image à gauche */}
+            <Box flex="1" p={3}>
+                <Image src={game.image} alt={game.name} borderRadius="md" />
+            </Box>
 
-            <Flex direction={{ base: 'column', md: 'row' }} gap={10}>
-                {/* Colonne gauche : Image de la couverture du jeu */}
-                <Box flex="1" maxW="300px">
-                    <Image src={game.cover} alt={game.name} borderRadius="md" boxShadow="lg" />
-                </Box>
+            {/* Détails du jeu à droite */}
+            <Box flex="2" p={3}>
+                <Heading as="h2" size="lg" mb={3}>{game.name}</Heading>
+                <Text fontSize="md" mb={3}><strong>Audience en temps réel:</strong> {game.audience} spectateurs</Text>
+                <Text fontSize="md" mb={3}><strong>Description:</strong> {game.description}</Text>
+                <Text fontSize="md" mb={3}><strong>Date de sortie:</strong> {game.releaseDate}</Text>
+                <Text fontSize="md" mb={3}><strong>Genres:</strong> {game.genres.join(', ')}</Text>
 
-                {/* Colonne droite : Infos détaillées sur le jeu */}
-                <VStack flex="2" align="stretch" spacing={5}>
-                    {/* Nom du jeu */}
-                    <Text fontSize="2xl" fontWeight="bold">
-                        {game.name}
-                    </Text>
-
-                    {/* Audience en temps réel */}
-                    <HStack spacing={3}>
-                        <Text fontSize="lg" fontWeight="semibold">Audience en temps réel :</Text>
-                        <Badge colorScheme="green" fontSize="lg">
-                            {game.audience.toLocaleString()} viewers
-                        </Badge>
-                    </HStack>
-
-                    {/* Meilleurs streamers */}
-                    <VStack align="start">
-                        <Text fontSize="lg" fontWeight="semibold">Top Streamers :</Text>
-                        {game.topStreamers.map((streamer, index) => (
-                            <Text key={index} fontSize="md">
-                                {index + 1}. {streamer}
-                            </Text>
-                        ))}
-                    </VStack>
-
-                    <Divider />
-
-                    {/* Description */}
-                    <Text fontSize="lg" fontWeight="semibold">Description :</Text>
-                    <Text>{game.description}</Text>
-
-                    {/* Date de sortie */}
-                    <HStack spacing={3}>
-                        <Text fontSize="lg" fontWeight="semibold">Date de sortie :</Text>
-                        <Text>{game.releaseDate}</Text>
-                    </HStack>
-
-                    {/* Genres */}
-                    <HStack spacing={3}>
-                        <Text fontSize="lg" fontWeight="semibold">Genres :</Text>
-                        {game.genres.map((genre, index) => (
-                            <Badge key={index} colorScheme="purple">
-                                {genre}
-                            </Badge>
-                        ))}
-                    </HStack>
-                </VStack>
-            </Flex>
+                {/* Liste des top streamers */}
+                <Heading as="h3" size="md" mb={2}>Top streamers</Heading>
+                <List spacing={2}>
+                    {game.topStreamers.map((streamer, index) => (
+                        <ListItem key={index}>• {streamer}</ListItem>
+                    ))}
+                </List>
+            </Box>
         </Box>
     );
 };

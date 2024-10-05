@@ -1,7 +1,8 @@
-// app/gamedetails/[gameId]/page.tsx
+import { Box, Spinner } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { Box, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
+import GameDetails from '../../components/GameDetails';
+import { games } from '../../mock/game';
 
 interface GameDetailsPageProps {
     params: {
@@ -12,7 +13,10 @@ interface GameDetailsPageProps {
 const GameDetailsPage: React.FC<GameDetailsPageProps> = ({ params }) => {
     const { gameId } = params;
 
-    if (!gameId) {
+    // Chercher le jeu correspondant à l'ID
+    const game = games.find((g) => g.id === Number(gameId));
+
+    if (!gameId || !game) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
                 <Spinner size="xl" />
@@ -22,9 +26,10 @@ const GameDetailsPage: React.FC<GameDetailsPageProps> = ({ params }) => {
 
     return (
         <Box>
-            <Text fontSize="2xl">Détails du jeu</Text>
-            <Text fontSize="xl">ID du jeu : {gameId}</Text>
-            {/* Autres informations de détails ici */}
+            <GameDetails
+                gameId={gameId as string}
+                game={game}
+            />
         </Box>
     );
 };

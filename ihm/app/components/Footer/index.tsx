@@ -24,9 +24,9 @@ const Footer: React.FC = () => {
                 <Box className="footer-stack-container">
                     <Heading as="h3" size="lg" mb={2}>Technologies</Heading>
                     <Flex className="footer-stack-logos" justify="flex-start" wrap="wrap">
-                        <Image className="footer-stack-logo-1x1" src="./logos/react.png" width="5em" alt="React" height="auto" maxH="50px" />
-                        <Image className="footer-stack-logo-rect-XL" src="./logos/kafka.png" width="5em" alt="Apache Kafka" height="auto" maxH="100px" />
-                        <Image className="footer-stack-logo-rect" src="./logos/mongodb.png" width="5em" alt="MongoDB" height="auto" maxH="80px" />
+                        <Image className="footer-stack-logo-1x1" src="./logos/react.png" m={1} width="auto" alt="React" height="3em" />
+                        <Image className="footer-stack-logo-rect-XL" src="./logos/kafka.png" m={1} width="auto" alt="Apache Kafka" height="3em" />
+                        <Image className="footer-stack-logo-rect" src="./logos/mongodb.png" m={1} width="auto" alt="MongoDB" height="3em" />
                     </Flex>
                 </Box>
             </Flex>
