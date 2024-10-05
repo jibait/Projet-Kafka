@@ -1,76 +1,108 @@
-import { Box, Image, Text, IconButton, HStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, Grid, IconButton } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { Game } from "../../interfaces/Game";
+import GameCard from "../GameCard";
 
 interface GameGridProps {
     games: Game[];
 }
 
 const GameCarousel: React.FC<GameGridProps> = ({ games }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [gamesPerPage, setGamesPerPage] = useState(4);
+    const [isTransitioning, setIsTransitioning] = useState(false);
 
-    const prevGame = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? games.length - 1 : prevIndex - 1
-        );
+    useEffect(() => {
+        const updateGamesPerPage = () => {
+            const screenWidth = window.innerWidth;
+
+            if (screenWidth >= 1200) {
+                setGamesPerPage(5);
+            } else if (screenWidth >= 768) {
+                setGamesPerPage(4);
+            } else {
+                setGamesPerPage(2);
+            }
+        };
+
+        updateGamesPerPage();
+        window.addEventListener("resize", updateGamesPerPage);
+
+        return () => window.removeEventListener("resize", updateGamesPerPage);
+    }, []);
+
+    const totalPages = Math.ceil(games.length / gamesPerPage);
+
+    const prevPage = () => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setCurrentPage((prevPage) => (prevPage === 0 ? totalPages - 1 : prevPage - 1));
+                setIsTransitioning(false);
+            }, 300);
+        }
     };
 
-    const nextGame = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex === games.length - 1 ? 0 : prevIndex + 1
-        );
+    const nextPage = () => {
+        if (!isTransitioning) {
+            setIsTransitioning(true);
+            setTimeout(() => {
+                setCurrentPage((prevPage) => (prevPage === totalPages - 1 ? 0 : prevPage + 1));
+                setIsTransitioning(false);
+            }, 300);
+        }
     };
+
+    const startIndex = currentPage * gamesPerPage;
+    const visibleGames = games.slice(startIndex, startIndex + gamesPerPage);
 
     return (
-        <Box position="relative" width="100%" maxWidth="600px" mx="auto">
-            <Box position="relative" overflow="hidden" width="100%">
-                {/* Jeu actuel */}
-                <Box position="relative">
-                    <Box
-                        position="absolute"
-                        top="10px"
-                        left="10px"
-                        backgroundColor="rgba(0, 0, 0, 0.7)"
-                        color="white"
-                        borderRadius="50%"
-                        width="30px"
-                        height="30px"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        fontSize="lg"
-                        zIndex={1}
-                    >
-                        {currentIndex + 1}
-                    </Box>
-                    <Image
-                        className="vignette"
-                        src={games[currentIndex].image}
-                        alt={games[currentIndex].name}
-                        objectFit="cover"
-                        width="100%"
-                        height="300px"
-                    />
-                </Box>
-                <Text className={"text-vignette"} fontWeight={"bold"} pt={2} color="white">
-                    {games[currentIndex].name}
-                </Text>
-            </Box>
+        <Box position="relative" width="100%" mx="auto" overflow="hidden">
+            {games.length > gamesPerPage && (
+                <IconButton
+                    aria-label="Previous Page"
+                    icon={<FontAwesomeIcon icon={faChevronLeft} />}
+                    onClick={prevPage}
+                    position="absolute"
+                    left="0"
+                    top="50%"
+                    transform="translateY(-50%)"
+                    zIndex={2}
+                    variant="link"
+                    color="white"
+                    fontSize="24px"
+                />
+            )}
 
-            {/* Boutons pour changer de jeu */}
-            <HStack justifyContent="space-between" mt={4}>
+            <Grid
+                templateColumns={`repeat(${gamesPerPage}, 1fr)`}
+                gap="6"
+                mx="10%"
+                className={isTransitioning ? "carousel-transition" : ""}
+            >
+                {visibleGames.map((game, index) => (
+                    <GameCard key={game.id} game={game} number={startIndex + index + 1} />
+                ))}
+            </Grid>
+
+            {games.length > gamesPerPage && (
                 <IconButton
-                    aria-label="Previous Game"
-                    icon={<FaChevronLeft />}
-                    onClick={prevGame}
+                    aria-label="Next Page"
+                    icon={<FontAwesomeIcon icon={faChevronRight} />}
+                    onClick={nextPage}
+                    position="absolute"
+                    right="0"
+                    top="50%"
+                    transform="translateY(-50%)"
+                    zIndex={2}
+                    variant="link"
+                    color="white"
+                    fontSize="24px"
                 />
-                <IconButton
-                    aria-label="Next Game"
-                    icon={<FaChevronRight />}
-                    onClick={nextGame}
-                />
-            </HStack>
+            )}
         </Box>
     );
 };
