@@ -9,7 +9,7 @@ interface Client {
 let clients: Client[] = [];
 
 // Démarrer le serveur WebSocket
-export const startWebSocketServer = (server: Server): void => {
+export const startWebSocketServer = (server: Server, messagesCache: string[]): void => {
     const wss = new WebSocketServer({ server });
 
     wss.on('connection', (ws: WebSocket) => {
@@ -17,6 +17,11 @@ export const startWebSocketServer = (server: Server): void => {
 
         // Ajouter le client connecté à la liste
         clients.push({ ws });
+
+        // Envoyer les messages du cache au nouveau client
+        messagesCache.forEach((message) => {
+            ws.send(message);
+        });
 
         // Gérer la déconnexion des clients
         ws.on('close', () => {
@@ -27,7 +32,10 @@ export const startWebSocketServer = (server: Server): void => {
 };
 
 // Envoyer un message à tous les clients connectés
-export const sendMessageToClients = (msg: string): void => {
+export const sendMessageToClients = (msg: string, messagesCache: string[]): void => {
+    // Stocker le message dans le cache
+    messagesCache.push(msg);
+
     clients.forEach(client => {
         if (client.ws.readyState === WebSocket.OPEN) {
             client.ws.send(msg);

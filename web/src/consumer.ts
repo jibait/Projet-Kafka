@@ -10,7 +10,7 @@ const kafka = new Kafka({
 const consumer = kafka.consumer({ groupId: 'group-id' });
 
 // Fonction pour démarrer le consumer Kafka
-export const runKafkaConsumer = async () => {
+export const runKafkaConsumer = async (messagesCache: string[]) => {
     try {
         await consumer.connect();
         await consumer.subscribe({ topic: 'twitch-streams', fromBeginning: true });
@@ -21,7 +21,7 @@ export const runKafkaConsumer = async () => {
                 console.log(`Message reçu: ${msg}`);
 
                 // Envoyer le message au client WebSocket
-                sendMessageToClients(msg);
+                sendMessageToClients(msg, messagesCache);
             },
         });
 
