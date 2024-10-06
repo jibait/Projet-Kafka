@@ -1,5 +1,6 @@
 import { Kafka, EachMessagePayload } from 'kafkajs';
 import { sendMessageToClients } from './websocket';
+import { getDb } from './mongodb';
 
 const kafka = new Kafka({
     clientId: 'my-app',

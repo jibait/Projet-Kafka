@@ -3,12 +3,19 @@ import { createServer } from 'http';
 import { startWebSocketServer } from './websocket';
 import { createProducer, sendMessage } from './producer';
 import { runKafkaConsumer } from './consumer';
+import { getDb } from "./mongodb";
 
 const app = express();
 const server = createServer(app);
 
 // Démarrer le serveur WebSocket
 startWebSocketServer(server);
+
+// Connexion à MongoDB
+const db = getDb();
+if (!db) {
+    console.error('MongoDB non connecté !!!!!!!!!');
+}
 
 // Initialiser le producer Kafka
 createProducer().catch(console.error);

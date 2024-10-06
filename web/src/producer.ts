@@ -1,7 +1,6 @@
 import { Kafka } from 'kafkajs';
 
 const kafka = new Kafka({
-    ssl: false,
     clientId: 'my-app',
     brokers: ['broker-1:19092', 'broker-2:19092', 'broker-3:19092'],
 });
