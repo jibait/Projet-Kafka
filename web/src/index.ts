@@ -4,6 +4,7 @@ import { startWebSocketServer } from './websocket';
 import { createProducer, sendMessage } from './producer';
 import { runKafkaConsumer } from './consumer';
 import { getDb } from "./mongodb";
+import WebSocket from 'ws';
 
 const app = express();
 const server = createServer(app);
@@ -51,4 +52,19 @@ sendMessage('mon-topic', 'Hello Kafka !').catch(console.error);
 // Démarrer le serveur HTTP et WebSocket sur le port 3000
 server.listen(3000, () => {
     console.log('Serveur démarré sur le port 3000');
+
+    // === Code de test WebSocket (simuler un client) ===
+    const ws = new WebSocket('ws://localhost:3000');  // Connexion au serveur WebSocket local
+
+    ws.on('open', () => {
+        console.log('Client WebSocket de test connecté');
+    });
+
+    ws.on('message', (message: string) => {
+        console.log(`Message reçu par le client de test : ${message}`);
+    });
+
+    ws.on('close', () => {
+        console.log('Client WebSocket de test déconnecté');
+    });
 });
