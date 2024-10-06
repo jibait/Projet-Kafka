@@ -9,6 +9,9 @@ export class Store {
     }
 
     addDataPoint(dataPoint: DataPoint) {
+        if (this.dataPoints.some((dp) => dp.timestamp === dataPoint.timestamp)) {
+            return;
+        }
         this.dataPoints.push(dataPoint);
     }
 
