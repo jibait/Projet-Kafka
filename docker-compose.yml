@@ -107,3 +107,11 @@ services:
       - broker-1
       - broker-2
       - broker-3
+
+  express-app:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: express-app
+    ports:
+      - "3000:3000"
