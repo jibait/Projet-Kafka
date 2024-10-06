@@ -4,13 +4,14 @@ import { startWebSocketServer } from './websocket';
 import { createProducer, sendMessage } from './producer';
 import { runKafkaConsumer } from './consumer';
 import { getDb } from "./mongodb";
-import WebSocket from 'ws';
+import WebSocket from 'ws';  // Import WebSocket pour le client de test
 
 const app = express();
 const server = createServer(app);
 
 // Démarrer le serveur WebSocket
-startWebSocketServer(server);
+const messagesCache: string[] = [];  // Stocker les messages en cache
+startWebSocketServer(server, messagesCache);  // Passer le cache au serveur WebSocket
 
 // Connexion à MongoDB
 const db = getDb();
@@ -25,18 +26,6 @@ app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");
 });
 
-// Route pour envoyer un message via le producer
-// app.post('/send', express.json(), async (req: Request, res: Response): Promise<void> => {
-//     const { topic, message } = req.body;
-//     if (!topic || !message) {
-//         res.status(400).send('Topic et message sont requis');
-//         return;
-//     }
-//     await sendMessage(topic, message);
-//     res.send(`Message envoyé au topic ${topic}`);
-// });
-
-
 app.get('/send', express.json(), async (req: Request, res: Response): Promise<void> => {
     let topic = 'mon-topic';
     await sendMessage(topic, 'HELLO KAFKA !!');
@@ -44,10 +33,7 @@ app.get('/send', express.json(), async (req: Request, res: Response): Promise<vo
 });
 
 // Démarrer le consumer Kafka
-runKafkaConsumer().catch(console.error);
-
-// envoyer un message via le producer
-sendMessage('mon-topic', 'Hello Kafka !').catch(console.error);
+runKafkaConsumer(messagesCache).catch(console.error);  // Passer messagesCache ici
 
 // Démarrer le serveur HTTP et WebSocket sur le port 3000
 server.listen(3000, () => {
