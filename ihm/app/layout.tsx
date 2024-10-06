@@ -1,6 +1,7 @@
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { Providers } from "./providers";
+
 import "./globals.css";
 
 export default function RootLayout({
