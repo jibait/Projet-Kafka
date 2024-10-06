@@ -2,8 +2,6 @@ services:
   controller-1:
     image: apache/kafka:latest
     container_name: controller-1
-    networks:
-      - kafka-network
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: controller
@@ -16,8 +14,6 @@ services:
   controller-2:
     image: apache/kafka:latest
     container_name: controller-2
-    networks:
-      - kafka-network
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: controller
@@ -30,8 +26,6 @@ services:
   controller-3:
     image: apache/kafka:latest
     container_name: controller-3
-    networks:
-      - kafka-network
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: controller
@@ -44,8 +38,6 @@ services:
   broker-1:
     image: apache/kafka:latest
     container_name: broker-1
-    networks:
-      - kafka-network
     ports:
       - 29092:9092
     environment:
@@ -62,12 +54,15 @@ services:
       - controller-1
       - controller-2
       - controller-3
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   broker-2:
     image: apache/kafka:latest
     container_name: broker-2
-    networks:
-      - kafka-network
     ports:
       - 39092:9092
     environment:
@@ -84,12 +79,15 @@ services:
       - controller-1
       - controller-2
       - controller-3
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   broker-3:
     image: apache/kafka:latest
     container_name: broker-3
-    networks:
-      - kafka-network
     ports:
       - 49092:9092
     environment:
@@ -106,21 +104,55 @@ services:
       - controller-1
       - controller-2
       - controller-3
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
-    networks:
-      - kafka-network
     ports:
       - "8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local-kafka-cluster
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker-1:19092,broker-2:19092,broker-3:19092
     depends_on:
-      - broker-1
-      - broker-2
-      - broker-3
+      broker-1:
+        condition: service_healthy
+      broker-2:
+        condition: service_healthy
+      broker-3:
+        condition: service_healthy
+
+
+  data-scrapper:
+    build: ./scraper
+    container_name: data-scrapper
+    depends_on:
+      broker-1:
+        condition: service_healthy
+      broker-2:
+        condition: service_healthy
+      broker-3:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKERS: broker-1:19092,broker-2:19092,broker-3:19092
+      REQUEST_INTERVAL: 300
+
+  data-processing:
+    build: ./data-processing
+    container_name: data-processing
+    depends_on:
+      broker-1:
+        condition: service_healthy
+      broker-2:
+        condition: service_healthy
+      broker-3:
+        condition: service_healthy
+    environment:
+      KAFKA_BROKERS: broker-1:19092,broker-2:19092,broker-3:19092
 
   express-app:
     build:
