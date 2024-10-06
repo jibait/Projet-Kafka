@@ -107,3 +107,13 @@ services:
       - broker-1
       - broker-2
       - broker-3
+
+  data-processing:
+    build: ./data-processing
+    container_name: data-processing
+    depends_on:
+      - broker-1
+      - broker-2
+      - broker-3
+    environment:
+      KAFKA_BROKERS: broker-1:19092,broker-2:19092,broker-3:19092
