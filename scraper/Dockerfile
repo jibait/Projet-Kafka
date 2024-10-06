@@ -5,10 +5,10 @@ FROM node:22.2.0
 WORKDIR /usr/src/app
 
 # Copy the entire folder contents to the container
-COPY ./scraper/ ./
+COPY ./ ./
 
 # Install the dependencies specified in package.json
-RUN npm install
+RUN npm ci
 
 # Run the main file
 CMD ["node", "main.cjs"]

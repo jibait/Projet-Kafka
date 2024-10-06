@@ -19,8 +19,6 @@ export class EventHandler {
     }
 
     addEvent(event: ScrapperEvent) {
-        console.log(`Event received: ${event.timestamp} - ${event.downloadIndex}/${event.totalDownloadNumber}`);
-
         let partialDownload = this.partialDownloads.get(event.timestamp);
 
         if (partialDownload === undefined) {
@@ -34,6 +32,8 @@ export class EventHandler {
             partialDownload.receivedScrapperEventNumber += 1;
             partialDownload.data = partialDownload.data.concat(event.data);
         }
+
+        console.log(`Event received: ${event.timestamp} - ${partialDownload.receivedScrapperEventNumber}/${partialDownload.expectedScrapperEventNumber}`);
 
         if (partialDownload.receivedScrapperEventNumber === partialDownload.expectedScrapperEventNumber) {
             console.log("Download completed: ", partialDownload.timestamp);

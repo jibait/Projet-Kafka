@@ -34,7 +34,6 @@ consumer.run({
     if (message.value === null) {
       return;
     }
-    console.log(`Received message: ${message.value.toString()}`);
     eventHandler.addEvent(parseScrapperEvent(message.value.toString()));
   },
 });
