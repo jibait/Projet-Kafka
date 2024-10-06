@@ -1,7 +1,6 @@
 // Imports
 const https = require("https");
 const { Kafka } = require('kafkajs');
-const fs = require('fs');
 const process = require('node:process');
 
 const defaultBrokers = ["localhost:29092", "localhost:39092", "localhost:49092"];
@@ -60,7 +59,7 @@ var dictionary = {};
 var mem = [];
 var games = [];
 var last = null;
-function getTopGames(pagination, refresh = false) {
+function getTopGames(pagination) {
 	var toppath = "/helix/games/top?first=100";
 	if (pagination !== null) {
 		toppath += "&after=" + pagination;
@@ -86,7 +85,7 @@ function getTopGames(pagination, refresh = false) {
 
 				res.on("end", () => {
 					var response = JSON.parse(data).data;
-					if (response == undefined && !refresh) {
+					if (response == undefined) {
 						lookupStreams(timestamp);	
 					} else {
 						response.forEach((game) => {
@@ -104,6 +103,10 @@ function getTopGames(pagination, refresh = false) {
 }
 async function getStreams(pagination, gameid, timestamp) {
 	let batch = false;
+	if (Array.isArray(gameid)) {
+		gameid = gameid.filter(id => id !== '');
+	}
+	// console.log(gameid);
 	if (typeof(gameid) === "string") {
 		gameid = "&game_id=" + gameid;
 		batch = false;
@@ -121,7 +124,7 @@ async function getStreams(pagination, gameid, timestamp) {
 	}
 	// console.log(gameid);
 	var path = "/helix/streams?first=100&type=live" + gameid;
-	if (pagination !== null) {
+	if (pagination !== null && pagination !== undefined) {
 		path += "&after=" + pagination;
 	}
 	const getOptions = {
@@ -181,27 +184,11 @@ async function getStreams(pagination, gameid, timestamp) {
 						} 
 						return;
 					} else if (JSON.parse(data).status === 429) {
-						const logStream = fs.createWriteStream('stream_logs.txt', { flags: 'a' });
-						logStream.write(`Rate limit exceeded\n`);
-						console.log("Rate limit exceeded");
+						// console.log("Rate limit exceeded");
 						setTimeout(() => {
 							getStreams(pagination ? pagination:null, gameid.split("&game_id="), timestamp);
 						}, 1000 * 1);
-					} else {
-						const gameStreams = groupedStreams[gameId];
-						let GameName = "";
-						message = `${timestamp};${games.indexOf(gameId)};${games.length}\n`;
-						producer.send({
-							topic: "twitch-streams",
-							messages: [{
-								key: `${GameName}`,
-								value: `${message}`
-							}]
-						}, (err, result) => {
-							if (!err) console.log("Message produced successfully");
-							if (err) console.log(err);
-						});
-					}
+					} 
 			});
 		})
 	])
@@ -209,14 +196,12 @@ async function getStreams(pagination, gameid, timestamp) {
 
 function lookupStreams(timestamp) {
 	console.log("Lookup streams on " + games.length + " games");
-	const logStream = fs.createWriteStream('stream_logs.txt', { flags: 'a' });
-	logStream.write(`Lookup streams on ${games.length} games at ${new Date().toLocaleString()}\n`);
 	games.slice(0, 50).forEach((game) => {
 		getStreams(null, game, timestamp);
 	});
 	let group = [];
 	games.slice(50).forEach((game, index) => {
-		if (index % 22 !== 0) {
+		if (index % 100 !== 0) {
 			group.push(game);
 		} else {
 			if (group.length !== 0) {
