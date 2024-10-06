@@ -1,0 +1,69 @@
+body {
+  background-color: #0e0e10;
+}
+
+body,
+h1,
+h2,
+h3,
+p {
+  font-family: "Inter", sans-serif !important;
+}
+
+.navbar {
+  background-color: #18181b !important;
+}
+
+.vignette {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  /* Largeur de la vignette */
+  height: 300px;
+  /* Hauteur de la vignette */
+}
+
+.vignette img {
+  display: block;
+  transition: transform 0.3s ease;
+  /* Augmenter la durée pour un effet plus fluide */
+  /* Supprimer l'ancienne transition plus rapide */
+}
+
+.vignette::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-left: 5px solid #9147ff;
+  border-bottom: 5px solid #9147ff;
+  transform: translate(-100%, 100%);
+  transition: transform 0.3s ease;
+  /* Correspond à la durée de l'effet de l'image */
+  z-index: 0;
+}
+
+.vignette:hover img {
+  transform: scale(1.05);
+  /* Zoomer légèrement l'image au survol */
+}
+
+.vignette:hover::after {
+  transform: translate(0, 0);
+  /* Montrer le contour violet lors du survol */
+}
+
+.text-vignette:hover {
+  color: #9147ff;
+  /* Modifier la couleur du texte au survol */
+}
+
+
+.carousel-transition {
+  transition: transform 1s ease-in-out;
+  transform: translateX(-200%);
+}
