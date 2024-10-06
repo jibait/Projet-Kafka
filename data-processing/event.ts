@@ -15,7 +15,7 @@ export interface ScrapperEvent {
 }
 
 export function parseScrapperEvent(string: String): ScrapperEvent {
-    const lines = string.replace("\r", "").split("\n");
+    const lines = string.replace("\r", "").split("\n").filter((line) => line.length > 0);
     const [timestamp, downloadIndex, totalDownloadNumber] = lines[0].split(";").map(Number);
     const data = lines.slice(1).map((line) => {
         const fields = line.split(";");

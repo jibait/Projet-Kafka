@@ -15,7 +15,7 @@ const kafka = new Kafka({
 });
 
 // Listen for the "data" topic
-const consumer = kafka.consumer({ groupId: "data-processing" });
+const consumer = kafka.consumer({ groupId: "data-processing", retry: { retries: 10 }, allowAutoTopicCreation: true });
 consumer.connect();
 consumer.subscribe({ topic: "twitch-streams", fromBeginning: true });
 

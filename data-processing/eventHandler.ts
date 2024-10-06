@@ -37,7 +37,7 @@ export class EventHandler {
 
         if (partialDownload.receivedScrapperEventNumber === partialDownload.expectedScrapperEventNumber) {
             console.log("Download completed: ", partialDownload.timestamp);
-            this.partialDownloads.delete(event.downloadIndex);
+            this.partialDownloads.delete(event.timestamp);
             this.processDownload(partialDownload);
         } else {
             this.partialDownloads.set(event.timestamp, partialDownload);
