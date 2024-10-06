@@ -15,16 +15,16 @@ const kafka = new Kafka({
 });
 
 // Listen for the "data" topic
-const consumer = kafka.consumer({ groupId: "data-processing", allowAutoTopicCreation: true });
+const consumer = kafka.consumer({ groupId: "data-processing" });
 consumer.connect();
 consumer.subscribe({ topic: "twitch-streams", fromBeginning: true });
 
-const producer = kafka.producer({ allowAutoTopicCreation: true });
+const producer = kafka.producer();
 producer.connect();
 
 const eventHandler = new EventHandler((result) => {
   producer.send({
-    topic: "processed-twicth-data",
+    topic: "processed-twitch-data",
     messages: [{ value: JSON.stringify(result) }],
   });
 });

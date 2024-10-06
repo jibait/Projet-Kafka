@@ -14,11 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   // Initialisation des services
   if (store.current === undefined || comService.current === undefined) {
     store.current = new Store();
-    comService.current = new ComService({store: store.current, url: "ws://localhost:8080"});
-    
-    setInterval(() => {
-        store.current?.addDataPoint({timestamp: Date.now(), totalViewerCount: Math.random()});
-    }, 1000);
+    comService.current = new ComService({store: store.current, url: "ws://localhost:3001"});
   }
 
   return (

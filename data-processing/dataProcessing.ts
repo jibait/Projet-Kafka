@@ -2,12 +2,17 @@ import { Stream } from "./event";
 
 export interface ProcessedDataResult {
   timestamp: number;
-  viewersByGame: { gameId: number; viewerCount: number }[];
-  viewersByLanguage: { language: string; viewerCount: number }[];
-  viewersByGameAndLanguage: {
-    gameId: number;
-    viewersByLanguage: { language: string; viewerCount: number }[];
-  }[];
+  totalViewerCount: number;
+  //   viewersByGame: { gameId: number; viewerCount: number }[];
+  //   viewersByLanguage: { language: string; viewerCount: number }[];
+  //   viewersByGameAndLanguage: {
+  //     gameId: number;
+  //     viewersByLanguage: { language: string; viewerCount: number }[];
+  //   }[];
+}
+
+export function getTotalViewerCount(streams: Stream[]) {
+  return streams.reduce((acc, stream) => acc + stream.viewer_count, 0);
 }
 
 export function getViewersByGame(streams: Stream[]) {

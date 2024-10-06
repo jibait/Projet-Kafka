@@ -1,4 +1,4 @@
-import { getViewersByGame, getViewersByGameAndLanguage, getViewersByLanguage, ProcessedDataResult } from "./dataProcessing";
+import { getTotalViewerCount, getViewersByGame, getViewersByGameAndLanguage, getViewersByLanguage, ProcessedDataResult } from "./dataProcessing";
 import { ScrapperEvent, Stream } from "./event";
 
 export interface ScrapperEventDownload {
@@ -47,9 +47,10 @@ export class EventHandler {
     private processDownload(download: ScrapperEventDownload) {
         const result: ProcessedDataResult = {
             timestamp: download.timestamp,
-            viewersByGame: getViewersByGame(download.data),
-            viewersByLanguage: getViewersByLanguage(download.data),
-            viewersByGameAndLanguage: getViewersByGameAndLanguage(download.data),
+            totalViewerCount: getTotalViewerCount(download.data),
+            // viewersByGame: getViewersByGame(download.data),
+            // viewersByLanguage: getViewersByLanguage(download.data),
+            // viewersByGameAndLanguage: getViewersByGameAndLanguage(download.data),
         }
         console.log(`Result for download ${download.timestamp} : `, JSON.stringify(result));
         this.resultListener(result);

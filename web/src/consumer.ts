@@ -13,7 +13,7 @@ const consumer = kafka.consumer({ groupId: 'group-id' });
 export const runKafkaConsumer = async () => {
     try {
         await consumer.connect();
-        await consumer.subscribe({ topic: 'twitch-streams', fromBeginning: true });
+        await consumer.subscribe({ topic: 'processed-twitch-data', fromBeginning: true });
 
         await consumer.run({
             eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {

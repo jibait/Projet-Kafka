@@ -30,9 +30,6 @@ export const TotalViewerNumberChart = observer(() => {
         scales: {
           x: {
             type: "time",
-            time: {
-              unit: "millisecond",
-            },
           },
         },
       }}
