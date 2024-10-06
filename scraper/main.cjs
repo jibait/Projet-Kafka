@@ -187,6 +187,20 @@ async function getStreams(pagination, gameid, timestamp) {
 						setTimeout(() => {
 							getStreams(pagination ? pagination:null, gameid.split("&game_id="), timestamp);
 						}, 1000 * 1);
+					} else {
+						const gameStreams = groupedStreams[gameId];
+						let GameName = "";
+						message = `${timestamp};${games.indexOf(gameId)};${games.length}\n`;
+						producer.send({
+							topic: "twitch-streams",
+							messages: [{
+								key: `${GameName}`,
+								value: `${message}`
+							}]
+						}, (err, result) => {
+							if (!err) console.log("Message produced successfully");
+							if (err) console.log(err);
+						});
 					}
 			});
 		})
