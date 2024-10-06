@@ -1,16 +1,47 @@
-// src/index.ts
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
+import express, { Request, Response } from 'express';
+import { createServer } from 'http';
+import { startWebSocketServer } from './websocket';
+import { createProducer, sendMessage } from './producer';
+import { runKafkaConsumer } from './consumer';
 
-dotenv.config();
+const app = express();
+const server = createServer(app);
 
-const app: Express = express();
-const port = process.env.PORT || 3000;
+// Démarrer le serveur WebSocket
+startWebSocketServer(server);
+
+// Initialiser le producer Kafka
+createProducer().catch(console.error);
 
 app.get("/", (req: Request, res: Response) => {
     res.send("Express + TypeScript Server");
 });
 
-app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+// Route pour envoyer un message via le producer
+// app.post('/send', express.json(), async (req: Request, res: Response): Promise<void> => {
+//     const { topic, message } = req.body;
+//     if (!topic || !message) {
+//         res.status(400).send('Topic et message sont requis');
+//         return;
+//     }
+//     await sendMessage(topic, message);
+//     res.send(`Message envoyé au topic ${topic}`);
+// });
+
+
+app.get('/send', express.json(), async (req: Request, res: Response): Promise<void> => {
+    let topic = 'mon-topic';
+    await sendMessage(topic, 'HELLO KAFKA !!');
+    res.send(`Message envoyé au topic ${topic}`);
+});
+
+// Démarrer le consumer Kafka
+runKafkaConsumer().catch(console.error);
+
+// envoyer un message via le producer
+sendMessage('mon-topic', 'Hello Kafka !').catch(console.error);
+
+// Démarrer le serveur HTTP et WebSocket sur le port 3000
+server.listen(3000, () => {
+    console.log('Serveur démarré sur le port 3000');
 });

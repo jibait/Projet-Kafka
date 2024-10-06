@@ -1,29 +1,28 @@
 import { Kafka } from 'kafkajs';
 
-// Créer une instance de Kafka
 const kafka = new Kafka({
+    ssl: false,
     clientId: 'my-app',
-    brokers: ['localhost:29092', 'localhost:39092', 'localhost:49092']
+    brokers: ['broker-1:19092', 'broker-2:19092', 'broker-3:19092'],
 });
 
 const producer = kafka.producer();
 
-const runProducer = async () => {
-    // Connexion au producteur
+export const createProducer = async () => {
     await producer.connect();
-
-    // Envoyer un message dans le topic 'test-topic'
-    await producer.send({
-        topic: 'test-topic',
-        messages: [
-            { value: 'Hello Kafka from TypeScript!' }
-        ],
-    });
-
-    console.log('Message envoyé !');
-
-    // Déconnexion du producteur
-    await producer.disconnect();
+    console.log('Producer Kafka connecté');
 };
 
-runProducer().catch(console.error);
+export const sendMessage = async (topic: string, message: string) => {
+    try {
+        await producer.send({
+            topic: topic,
+            messages: [
+                { value: message },
+            ],
+        });
+        console.log(`Message envoyé : ${message}`);
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi du message :', error);
+    }
+};

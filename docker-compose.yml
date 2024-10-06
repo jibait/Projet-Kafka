@@ -2,6 +2,8 @@ services:
   controller-1:
     image: apache/kafka:latest
     container_name: controller-1
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: controller
@@ -14,6 +16,8 @@ services:
   controller-2:
     image: apache/kafka:latest
     container_name: controller-2
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: controller
@@ -26,6 +30,8 @@ services:
   controller-3:
     image: apache/kafka:latest
     container_name: controller-3
+    networks:
+      - kafka-network
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: controller
@@ -38,6 +44,8 @@ services:
   broker-1:
     image: apache/kafka:latest
     container_name: broker-1
+    networks:
+      - kafka-network
     ports:
       - 29092:9092
     environment:
@@ -58,6 +66,8 @@ services:
   broker-2:
     image: apache/kafka:latest
     container_name: broker-2
+    networks:
+      - kafka-network
     ports:
       - 39092:9092
     environment:
@@ -78,6 +88,8 @@ services:
   broker-3:
     image: apache/kafka:latest
     container_name: broker-3
+    networks:
+      - kafka-network
     ports:
       - 49092:9092
     environment:
@@ -98,6 +110,8 @@ services:
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
+    networks:
+      - kafka-network
     ports:
       - "8080:8080"
     environment:
@@ -113,17 +127,18 @@ services:
       context: ./web
       dockerfile: Dockerfile
     container_name: express-app
+    networks:
+      - kafka-network
     ports:
       - "3000:3000"
 
+  # Use root/example as user/password credentials
 #  mongo:
-#    build: ./database
+#    image: mongo
 #    restart: always
 #    environment:
 #      MONGO_INITDB_ROOT_USERNAME: root
-#      MONGO_INITDB_ROOT_PASSWORD: root
-#    volumes:
-#      - ./database/mongo_backup:/data/db/mongo_backup
+#      MONGO_INITDB_ROOT_PASSWORD: example
 #
 #  mongo-express:
 #    image: mongo-express
@@ -131,26 +146,11 @@ services:
 #    ports:
 #      - 8081:8081
 #    environment:
-#      ME_CONFIG_MONGODB_ADMINUSERNAME: mongoAdmin
-#      ME_CONFIG_MONGODB_ADMINPASSWORD: mongoAdmin
-#      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+#      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+#      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+#      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 #      ME_CONFIG_BASICAUTH: false
 
-  # Use root/example as user/password credentials
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-      ME_CONFIG_BASICAUTH: false
+networks:
+  kafka-network:
+    driver: bridge

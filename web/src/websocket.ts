@@ -8,7 +8,7 @@ interface Client {
 // Tableau pour stocker les clients connectés
 let clients: Client[] = [];
 
-// Fonction pour démarrer le serveur WebSocket
+// Démarrer le serveur WebSocket
 export const startWebSocketServer = (server: Server): void => {
     const wss = new WebSocketServer({ server });
 
@@ -26,7 +26,7 @@ export const startWebSocketServer = (server: Server): void => {
     });
 };
 
-// Fonction pour envoyer un message à tous les clients connectés
+// Envoyer un message à tous les clients connectés
 export const sendMessageToClients = (msg: string): void => {
     clients.forEach(client => {
         if (client.ws.readyState === WebSocket.OPEN) {
