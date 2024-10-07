@@ -11,4 +11,4 @@ COPY ./ ./
 RUN npm ci
 
 # Run the main file
-CMD ["node", "main.cjs"]
+CMD ["npm", "run", "start"]
