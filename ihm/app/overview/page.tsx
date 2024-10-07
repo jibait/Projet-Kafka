@@ -20,6 +20,9 @@ import {
 import VerticalCategory from "../components/VerticalCategory";
 import { Game } from "../interfaces/Game";
 import { TotalViewerNumberChart } from "../components/Charts/TotalViewerNumberChart";
+import { ViewerByLanguage } from "../components/Charts/ViewerByLanguage";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../Hooks/useStore";
 
 type Category = {
   title: string;
@@ -74,29 +77,34 @@ const categories: Category[] = [
   },
 ];
 
-const Overview: React.FC = () => {
+const Overview: React.FC = observer(() => {
+
+  const store = useStore();
+
+  const lastDataPoint = store.dataPoints.length > 0 ? store.dataPoints[store.dataPoints.length - 1] : undefined;
+
   const statsData = [
     {
       category: "Spectateurs",
-      value: 1200,
+      value: lastDataPoint?.totalViewerCount ?? 0,
       description: "Total de spectateurs en direct",
       icon: faUsers,
     },
     {
-      category: "Jeux populaires",
-      value: 35,
-      description: "Nombre de jeux avec le plus de spectateurs",
+      category: "Jeux streamés",
+      value: lastDataPoint?.viewersByGame.length ?? 0,
+      description: "Nombre de jeux différents actuellement streamés",
       icon: faGamepad,
     },
     {
-      category: "Streamers",
-      value: 500,
-      description: "Nombre total de streamers actifs",
+      category: "Streams actifs",
+      value: lastDataPoint?.totalStreamCount ?? 0,
+      description: "Nombre total de streams actifs",
       icon: faMicrophone,
     },
     {
       category: "Langues",
-      value: 10,
+      value: lastDataPoint?.viewersByLanguage.length ?? 0,
       description: "Nombre de langues parlées par les streamers",
       icon: faGlobe,
     },
@@ -126,7 +134,10 @@ const Overview: React.FC = () => {
           </Stat>
         ))}
       </SimpleGrid>
+      <Heading size="lg" color="white" mb="4">Nombre de spectateurs</Heading>
       <TotalViewerNumberChart/>
+      <Heading size="lg" color="white" mb="4">Nombre de spectateurs par langue</Heading>
+      <ViewerByLanguage/>
       {categories.map((category) => (
         <VerticalCategory
           key={category.title}
@@ -136,6 +147,6 @@ const Overview: React.FC = () => {
       ))}
     </Box>
   );
-};
+});
 
 export default Overview;

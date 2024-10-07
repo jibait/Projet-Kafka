@@ -1,10 +1,27 @@
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, TimeScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import 'chartjs-adapter-date-fns';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../Hooks/useStore';
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import "chartjs-adapter-date-fns";
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../Hooks/useStore";
 
-ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(
+  TimeScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export const TotalViewerNumberChart = observer(() => {
   const store = useStore();
@@ -14,6 +31,15 @@ export const TotalViewerNumberChart = observer(() => {
   });
 
   return (
+    <div
+    style={{
+      height: "50vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
     <Line
       data={{
         datasets: [
@@ -34,5 +60,6 @@ export const TotalViewerNumberChart = observer(() => {
         },
       }}
     />
+    </div>
   );
 });

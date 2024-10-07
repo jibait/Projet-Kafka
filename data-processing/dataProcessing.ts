@@ -3,12 +3,17 @@ import { Stream } from "./event";
 export interface ProcessedDataResult {
   timestamp: number;
   totalViewerCount: number;
+  totalStreamCount: number;
   viewersByGame: [number, number][];
   viewersByLanguage: [string, number][];
 }
 
 export function getTotalViewerCount(streams: Stream[]) {
   return streams.reduce((acc, stream) => acc + stream.viewer_count, 0);
+}
+
+export function getTotalStreamCount(streams: Stream[]) {
+  return streams.length;
 }
 
 export function getViewersByGame(streams: Stream[]): [number, number][] {
@@ -20,7 +25,6 @@ export function getViewersByGame(streams: Stream[]): [number, number][] {
   // serialize the map to an array of objects
   return Array.from(viewersByGame)
     .sort((a, b) => (a[1] > b[1] ? -1 : 1))
-    .slice(0, 20)
     .map(([gameId, viewerCount]) => [gameId, viewerCount]);
 }
 
@@ -34,8 +38,7 @@ export function getViewersByLanguage(streams: Stream[]): [string, number][] {
     );
   });
   // serialize the map to an array of objects
-  return Array.from(viewersByLanguage).map(([language, viewerCount]) => [
-    language,
-    viewerCount,
-  ]);
+  return Array.from(viewersByLanguage)
+    .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+    .map(([language, viewerCount]) => [language, viewerCount]);
 }
