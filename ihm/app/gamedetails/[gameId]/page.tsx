@@ -1,8 +1,10 @@
+"use client";
+
 import { Box, Spinner } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 import React from 'react';
 import GameDetails from '../../components/GameDetails';
-import { games } from '../../mock/game';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../Hooks/useStore';
 
 interface GameDetailsPageProps {
     params: {
@@ -10,11 +12,13 @@ interface GameDetailsPageProps {
     };
 }
 
-const GameDetailsPage: React.FC<GameDetailsPageProps> = ({ params }) => {
+const GameDetailsPage: React.FC<GameDetailsPageProps> = observer(({ params }) => {
     const { gameId } = params;
 
+    const store = useStore();
+
     // Chercher le jeu correspondant à l'ID
-    const game = games.find((g) => g.id === Number(gameId));
+    const game = store.games.find((g) => g.id === gameId);
 
     if (!gameId || !game) {
         return (
@@ -32,6 +36,6 @@ const GameDetailsPage: React.FC<GameDetailsPageProps> = ({ params }) => {
             />
         </Box>
     );
-};
+});
 
 export default GameDetailsPage;

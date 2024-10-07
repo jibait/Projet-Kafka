@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx';
-import { DataPoint } from './types';
+import { DataPoint, Games } from './types';
 
 export class Store {
     dataPoints: DataPoint[] = [];
+    games: Games = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -15,6 +16,9 @@ export class Store {
         this.dataPoints.push(dataPoint);
     }
 
+    setGames(games: Games) {
+        this.games = games;
+    }
 }
 
 export const store = new Store();

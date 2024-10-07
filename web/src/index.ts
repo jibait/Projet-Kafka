@@ -10,8 +10,9 @@ const app = express();
 const server = createServer(app);
 
 // Démarrer le serveur WebSocket
-const messagesCache: string[] = [];  // Stocker les messages en cache
-startWebSocketServer(server, messagesCache);  // Passer le cache au serveur WebSocket
+const dataCache: string[] = [];  // Stocker les messages en cache
+const gameCache = new Map<string, any>();  // Stocker les jeux en cache
+startWebSocketServer(server, dataCache, gameCache);  // Passer le cache au serveur WebSocket
 
 // Connexion à MongoDB
 const db = getDb();
@@ -33,14 +34,14 @@ app.get('/send', express.json(), async (req: Request, res: Response): Promise<vo
 });
 
 // Démarrer le consumer Kafka
-runKafkaConsumer(messagesCache).catch(console.error);  // Passer messagesCache ici
+runKafkaConsumer(dataCache, gameCache).catch(console.error);  // Passer dataCache ici
 
-// Démarrer le serveur HTTP et WebSocket sur le port 3000
-server.listen(3000, () => {
-    console.log('Serveur démarré sur le port 3000');
+// Démarrer le serveur HTTP et WebSocket sur le port 3001
+server.listen(3001, () => {
+    console.log('Serveur démarré sur le port 3001');
 
     // === Code de test WebSocket (simuler un client) ===
-    const ws = new WebSocket('ws://localhost:3000');  // Connexion au serveur WebSocket local
+    const ws = new WebSocket('ws://localhost:3001');  // Connexion au serveur WebSocket local
 
     ws.on('open', () => {
         console.log('Client WebSocket de test connecté');

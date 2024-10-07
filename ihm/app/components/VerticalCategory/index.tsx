@@ -1,7 +1,7 @@
 import { Heading, Stack } from "@chakra-ui/react";
 import React from "react";
-import { Game } from "../../interfaces/Game";
 import GameCarousel from "../GameCarousel";
+import { Game } from "../../store/types";
 
 // Définition du type pour les catégories
 interface VerticalCategoryProps {

@@ -1,5 +1,5 @@
 import { Store } from "../store/Store";
-import { dataPointSchema } from "../store/types";
+import { messageSchema } from "../store/types";
 
 type ComServiceParams = {
     url: string;
@@ -57,8 +57,6 @@ export class ComService {
     }
 
     private handleMessage(message: MessageEvent) {
-
-        console.log('Message reçu : ', message.data);
         
         let parsedMessage: unknown;
 
@@ -68,12 +66,18 @@ export class ComService {
             console.error('Erreur lors de la lecture du message, JSON invalid', error);
         }
 
-        const parsingResult = dataPointSchema.safeParse(parsedMessage);
+        const parsingResult = messageSchema.safeParse(parsedMessage);
         if (parsingResult.success === false) {
             console.error('Erreur lors de la validation du message', parsingResult.error);
             return;
         }
 
-        this.store.addDataPoint(parsingResult.data);
+        console.log('Message parsé : ', parsingResult.data.type);
+
+        if (parsingResult.data.type === 'data') {
+            this.store.addDataPoint(parsingResult.data.data);
+        } else {
+            this.store.setGames(parsingResult.data.data);
+        }
     }
 }

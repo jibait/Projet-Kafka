@@ -18,70 +18,30 @@ import {
   faGlobe,
 } from "@fortawesome/free-solid-svg-icons";
 import VerticalCategory from "../components/VerticalCategory";
-import { Game } from "../interfaces/Game";
 import { TotalViewerNumberChart } from "../components/Charts/TotalViewerNumberChart";
 import { ViewerByLanguage } from "../components/Charts/ViewerByLanguage";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../Hooks/useStore";
+import { Game } from "../store/types";
 
 type Category = {
   title: string;
   games: Game[];
 };
 
-const categories: Category[] = [
-  {
-    title: "Jeux les plus populaires du moment",
-    games: [
-      { id: 1, name: "Just Chatting", image: "/mock/just-chating.jpg" },
-      { id: 2, name: "League of Legends", image: "/mock/lol.jpg" },
-      { id: 3, name: "Grand Theft Auto V", image: "/mock/gta-v.jpg" },
-      { id: 4, name: "Valorant", image: "/mock/valorant.png" },
-      { id: 5, name: "Minecraft", image: "/mock/minecraft.jpg" },
-    ],
-  },
-  {
-    title: "Jeux les plus populaires en France",
-    games: [
-      { id: 1, name: "Just Chatting", image: "/mock/just-chating.jpg" },
-      { id: 2, name: "League of Legends", image: "/mock/lol.jpg" },
-      { id: 3, name: "Grand Theft Auto V", image: "/mock/gta-v.jpg" },
-      { id: 4, name: "Valorant", image: "/mock/valorant.png" },
-      { id: 5, name: "Minecraft", image: "/mock/minecraft.jpg" },
-    ],
-  },
-  {
-    title: "Streamers les plus populaires en langue française",
-    games: [
-      { id: 1, name: "Just Chatting", image: "/mock/just-chating.jpg" },
-      { id: 2, name: "League of Legends", image: "/mock/lol.jpg" },
-      { id: 3, name: "Grand Theft Auto V", image: "/mock/gta-v.jpg" },
-      { id: 4, name: "Valorant", image: "/mock/valorant.png" },
-      { id: 5, name: "Minecraft", image: "/mock/minecraft.jpg" },
-      { id: 6, name: "World of Warcraft", image: "/mock/wow.png" },
-      { id: 7, name: "Rocket League", image: "/mock/rocket.jpg" },
-      { id: 8, name: "EA Sports FC 25", image: "/mock/ea-fc.jpg" },
-      { id: 9, name: "Super Smash Bros Ultimate", image: "/mock/ssb.jpg" },
-      { id: 10, name: "Elden Ring", image: "/mock/eldenring.jpg" },
-    ],
-  },
-  {
-    title: "Streamers les plus populaires en langue anglaise",
-    games: [
-      { id: 1, name: "Just Chatting", image: "/mock/just-chating.jpg" },
-      { id: 2, name: "League of Legends", image: "/mock/lol.jpg" },
-      { id: 3, name: "Grand Theft Auto V", image: "/mock/gta-v.jpg" },
-      { id: 4, name: "Valorant", image: "/mock/valorant.png" },
-      { id: 5, name: "Minecraft", image: "/mock/minecraft.jpg" },
-    ],
-  },
-];
-
 const Overview: React.FC = observer(() => {
-
   const store = useStore();
 
-  const lastDataPoint = store.dataPoints.length > 0 ? store.dataPoints[store.dataPoints.length - 1] : undefined;
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const lastDataPoint =
+    isClient && store.dataPoints.length > 0
+      ? store.dataPoints[store.dataPoints.length - 1]
+      : undefined;
 
   const statsData = [
     {
@@ -110,6 +70,21 @@ const Overview: React.FC = observer(() => {
     },
   ];
 
+  const categories: Category[] = [
+    {
+      title: "Jeux les plus populaires du moment",
+      games:
+        lastDataPoint?.viewersByGame.slice(0, 10).map(
+          ([gameId]) =>
+            store.games.find((g) => g.id === String(gameId)) ?? {
+              id: String(gameId),
+              box_art_url: "",
+              name: "",
+            }
+        ) ?? [],
+    },
+  ];
+
   return (
     <Box p={5}>
       <Heading as="h2" mb={6} color={"white"}>
@@ -134,10 +109,14 @@ const Overview: React.FC = observer(() => {
           </Stat>
         ))}
       </SimpleGrid>
-      <Heading size="lg" color="white" mb="4">Nombre de spectateurs</Heading>
-      <TotalViewerNumberChart/>
-      <Heading size="lg" color="white" mb="4">Nombre de spectateurs par langue</Heading>
-      <ViewerByLanguage/>
+      <Heading size="lg" color="white" mb="4">
+        Nombre de spectateurs
+      </Heading>
+      <TotalViewerNumberChart />
+      <Heading size="lg" color="white" mb="4">
+        Nombre de spectateurs par langue
+      </Heading>
+      <ViewerByLanguage />
       {categories.map((category) => (
         <VerticalCategory
           key={category.title}

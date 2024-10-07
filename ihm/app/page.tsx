@@ -16,6 +16,7 @@ import {
     faCrown,
     faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
+import NextLink from 'next/link'
 import React from "react";
 import Feature from "./components/Feature";
 
@@ -66,7 +67,7 @@ const Home: React.FC = () => {
                 </Box>
                 {/* Flèche vers le bas */}
                 <Box mt={6}>
-                    <Link href="/overview">
+                    <Link as={NextLink} href="/overview">
                         <Text color="gray.300" mb={2}>En savoir plus</Text>
                     </Link>
                     <FontAwesomeIcon icon={faArrowDown} size="2x" color="white" />
@@ -163,7 +164,7 @@ const Home: React.FC = () => {
                         Explorez, analysez et comprenez les audiences Twitch comme jamais
                         auparavant.
                     </Text>
-                    <Link href="/overview">
+                    <Link as={NextLink} href="/overview">
                         <Button colorScheme="purple" size="lg">
                             Commencez à analyser dès maintenant
                         </Button>

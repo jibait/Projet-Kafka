@@ -1,8 +1,8 @@
 // src/components/GameCard.tsx
 import React from 'react';
-import { Box, Image, Text } from '@chakra-ui/react';
-import Link from 'next/link';
-import { Game } from '../../interfaces/Game';
+import NextLink from 'next/link';
+import { Box, Image, Link, Text } from '@chakra-ui/react';
+import { Game } from '../../store/types';
 
 interface GameCardProps {
     game: Game;
@@ -10,7 +10,7 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ game, number }) => (
-    <Link href={`/gamedetails/${game.id}`} passHref>
+    <Link as={NextLink} href={`/gamedetails/${game.id}`} passHref>
         <Box
             position="relative"
             overflow="hidden"
@@ -40,7 +40,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, number }) => (
             <Box className="vignette" overflow="hidden">
                 <Image
                     className="vignette"
-                    src={game.image}
+                    src={game.box_art_url.replace('{width}', '285').replace('{height}', '380')}
                     alt={game.name}
                     transition="transform 0.3s ease" // Ajout de la transition pour l'animation
                     _hover={{ transform: 'scale(1.05)' }} // Zoom au survol
