@@ -7,13 +7,22 @@ const kafka = new Kafka({
     brokers: ['broker-1:19092', 'broker-2:19092', 'broker-3:19092'],
 });
 
-const consumer = kafka.consumer({ groupId: 'group-id' });
+const consumer = kafka.consumer({ groupId: 'group-id', allowAutoTopicCreation: true });
 
 // Fonction pour démarrer le consumer Kafka
 export const runKafkaConsumer = async (messagesCache: string[]) => {
     try {
         await consumer.connect();
-        await consumer.subscribe({ topic: 'processed-twitch-data', fromBeginning: true });
+
+        do {
+            try {
+                await consumer.subscribe({ topic: 'processed-twitch-data', fromBeginning: true });
+                break;
+            } catch (error) {
+                console.error('Erreur lors de la souscription au topic :', error);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+            }
+        } while (true);
 
         await consumer.run({
             eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {

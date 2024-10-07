@@ -169,7 +169,7 @@ services:
     ports:
       - "3001:3000"
     depends_on:
-      - data-scrapper
+      - data-processing
 
   # Use root/example as user/password credentials
 #  mongo:
