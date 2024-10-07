@@ -59,9 +59,11 @@ const Home: React.FC = () => {
                                 plus regardés, et les préférences linguistiques des spectateurs.
                             </Text>
 
-                            <Button colorScheme="purple" size="lg" mt="4">
-                                Commencez à analyser dès maintenant
-                            </Button>
+                            <Link as={NextLink} href="/overview">
+                                <Button colorScheme="purple" size="lg" mt="4">
+                                    Commencez à analyser dès maintenant
+                                </Button>
+                            </Link>
                         </VStack>
                     </Fade>
                 </Box>
@@ -127,7 +129,7 @@ const Home: React.FC = () => {
                     </Text>
                     <Text color="gray.300" mb={2}>
                         ➜ <strong>Producteur de données</strong> - Nos systèmes extraient des
-                        informations brutes directement depuis l'API Twitch.
+                        informations brutes directement depuis l&apos;API Twitch.
                     </Text>
                     <Text color="gray.300" mb={2}>
                         ➜ <strong>Traitement des données</strong> - Les données sont

@@ -43,7 +43,7 @@ const SearchPage: React.FC<SearchPageProps> = observer(({params}) => {
   return (
     <div>
       <Heading as="h1" size="lg" mb={5} color={"white"}>
-        Test {searchPrompt}
+        Résultats pour &apos;{searchPrompt}&apos;
       </Heading>
       <SimpleGrid minChildWidth='285px' spacing='40px'>
         {results.map((game) => (

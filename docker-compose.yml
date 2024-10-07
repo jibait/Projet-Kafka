@@ -161,15 +161,26 @@ services:
     environment:
       KAFKA_BROKERS: broker-1:19092,broker-2:19092,broker-3:19092
 
-  express-app:
+  web-back-end:
     build:
       context: ./web
       dockerfile: Dockerfile
-    container_name: express-app
+    container_name: web-back-end
     ports:
-      - "3001:3000"
+      - "3001:3001"
     depends_on:
       - data-processing
+    environment:
+      KAFKA_BROKERS: broker-1:19092,broker-2:19092,broker-3:19092
+
+  web-front-end:
+    build: ./ihm
+    container_name: web-front-end
+    ports:
+      - "80:3000"
+    tty: true
+    depends_on:
+      - web-back-end
 
   # Use root/example as user/password credentials
 #  mongo:

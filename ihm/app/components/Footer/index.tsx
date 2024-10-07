@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Text, Image, UnorderedList, ListItem } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, UnorderedList, ListItem } from '@chakra-ui/react';
 
 const Footer: React.FC = () => {
     return (

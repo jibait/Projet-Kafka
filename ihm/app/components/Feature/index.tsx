@@ -1,10 +1,11 @@
 import { Box, Text } from "@chakra-ui/react";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 // Composant pour les fonctionnalités
 const Feature: React.FC<{
-    icon: any;
+    icon: IconProp;
     title: string;
     description: string;
 }> = ({ icon, title, description }) => {

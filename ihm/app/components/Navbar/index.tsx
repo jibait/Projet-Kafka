@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
         <InputGroup size="md" width={{ base: "120px", md: "550px" }} mx="auto">
           <Input
             pr="3rem"
-            placeholder="Recherchez un jeu, un streamer, ou une langue..."
+            placeholder="Recherchez un jeu"
             bg="gray.700"
             color="white"
             _placeholder={{ color: "gray.400" }}
@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
             mx="2"
             leftIcon={<FontAwesomeIcon icon={faChartBar} />}
           >
-            Vue d'ensemble
+            Vue d&apos;ensemble
           </Button>
         </Link>
       </Flex>
