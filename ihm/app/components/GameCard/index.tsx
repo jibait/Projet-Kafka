@@ -15,6 +15,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, number }) => (
             position="relative"
             overflow="hidden"
             cursor="pointer"
+            style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}
         >
             {number !== undefined && (
                 <Box

@@ -1,10 +1,11 @@
 "use client";
 
 import { Box, Spinner } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import GameDetails from '../../components/GameDetails';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../Hooks/useStore';
+import { Game } from '../../store/types';
 
 interface GameDetailsPageProps {
     params: {
@@ -17,10 +18,16 @@ const GameDetailsPage: React.FC<GameDetailsPageProps> = observer(({ params }) =>
 
     const store = useStore();
 
-    // Chercher le jeu correspondant à l'ID
-    const game = store.games.find((g) => g.id === gameId);
+    const [result, setResult] = React.useState<Game | undefined>(undefined);
 
-    if (!gameId || !game) {
+    useEffect(() => {
+        const searchResult = store.games.find((game) =>
+            game.id === gameId
+        );
+        setResult(searchResult);
+    }, [gameId, store.games]);
+
+    if (result === undefined) {
         return (
             <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
                 <Spinner size="xl" />
@@ -32,7 +39,7 @@ const GameDetailsPage: React.FC<GameDetailsPageProps> = observer(({ params }) =>
         <Box>
             <GameDetails
                 gameId={gameId as string}
-                game={game}
+                game={result}
             />
         </Box>
     );

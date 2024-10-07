@@ -23,6 +23,7 @@ import { ViewerByLanguage } from "../components/Charts/ViewerByLanguage";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../Hooks/useStore";
 import { Game } from "../store/types";
+import { ViewerByGame } from "../components/Charts/ViewerByGame";
 
 type Category = {
   title: string;
@@ -117,6 +118,10 @@ const Overview: React.FC = observer(() => {
         Nombre de spectateurs par langue
       </Heading>
       <ViewerByLanguage />
+      <Heading size="lg" color="white" mb="4">
+        Nombre de spectateurs par jeu
+      </Heading>
+      <ViewerByGame />
       {categories.map((category) => (
         <VerticalCategory
           key={category.title}
