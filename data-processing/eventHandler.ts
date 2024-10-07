@@ -1,11 +1,11 @@
-import { getTotalViewerCount, getViewersByGame, getViewersByGameAndLanguage, getViewersByLanguage, ProcessedDataResult } from "./dataProcessing";
+import { getTotalViewerCount, getViewersByGame, getViewersByLanguage, ProcessedDataResult } from "./dataProcessing";
 import { ScrapperEvent, Stream } from "./event";
 
 export interface ScrapperEventDownload {
     timestamp: number;
     receivedScrapperEventNumber: number;
     expectedScrapperEventNumber: number;
-    data: Stream[];
+    data: Map<number, Stream>;
 }
 
 export class EventHandler {
@@ -26,12 +26,15 @@ export class EventHandler {
                 timestamp: event.timestamp,
                 receivedScrapperEventNumber: 1,
                 expectedScrapperEventNumber: event.totalDownloadNumber,
-                data: event.data,
+                data: new Map(),
             };
         } else {
             partialDownload.receivedScrapperEventNumber += 1;
-            partialDownload.data = partialDownload.data.concat(event.data);
         }
+
+        event.data.forEach((stream) => {
+            partialDownload.data.set(stream.streamId, stream);
+        });
 
         console.log(`Event received: ${event.timestamp} - ${partialDownload.receivedScrapperEventNumber}/${partialDownload.expectedScrapperEventNumber}`);
 
@@ -45,12 +48,12 @@ export class EventHandler {
     }
 
     private processDownload(download: ScrapperEventDownload) {
+        const streams = Array.from(download.data.values());
         const result: ProcessedDataResult = {
             timestamp: download.timestamp,
-            totalViewerCount: getTotalViewerCount(download.data),
-            // viewersByGame: getViewersByGame(download.data),
-            // viewersByLanguage: getViewersByLanguage(download.data),
-            // viewersByGameAndLanguage: getViewersByGameAndLanguage(download.data),
+            totalViewerCount: getTotalViewerCount(streams),
+            viewersByGame: getViewersByGame(streams),
+            viewersByLanguage: getViewersByLanguage(streams),
         }
         console.log(`Result for download ${download.timestamp} : `, JSON.stringify(result));
         this.resultListener(result);

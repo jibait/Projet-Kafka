@@ -3,57 +3,28 @@ import { Stream } from "./event";
 export interface ProcessedDataResult {
   timestamp: number;
   totalViewerCount: number;
-  //   viewersByGame: { gameId: number; viewerCount: number }[];
-  //   viewersByLanguage: { language: string; viewerCount: number }[];
-  //   viewersByGameAndLanguage: {
-  //     gameId: number;
-  //     viewersByLanguage: { language: string; viewerCount: number }[];
-  //   }[];
+  viewersByGame: [number, number][];
+  viewersByLanguage: [string, number][];
 }
 
 export function getTotalViewerCount(streams: Stream[]) {
   return streams.reduce((acc, stream) => acc + stream.viewer_count, 0);
 }
 
-export function getViewersByGame(streams: Stream[]) {
+export function getViewersByGame(streams: Stream[]): [number, number][] {
   const viewersByGame: Map<number, number> = new Map();
   streams.forEach((stream) => {
     const currentViewers = viewersByGame.get(stream.gameId) || 0;
     viewersByGame.set(stream.gameId, currentViewers + stream.viewer_count);
   });
   // serialize the map to an array of objects
-  return Array.from(viewersByGame).map(([gameId, viewerCount]) => ({
-    gameId,
-    viewerCount,
-  }));
+  return Array.from(viewersByGame)
+    .sort((a, b) => (a[1] > b[1] ? -1 : 1))
+    .slice(0, 20)
+    .map(([gameId, viewerCount]) => [gameId, viewerCount]);
 }
 
-export function getViewersByGameAndLanguage(stream: Stream[]) {
-  const viewersByGameAndLanguage: Map<number, Map<string, number>> = new Map();
-  stream.forEach((stream) => {
-    let viewersByLanguage = viewersByGameAndLanguage.get(stream.gameId);
-    if (viewersByLanguage === undefined) {
-      viewersByLanguage = new Map();
-      viewersByGameAndLanguage.set(stream.gameId, viewersByLanguage);
-    }
-    const currentViewers = viewersByLanguage.get(stream.language) || 0;
-    viewersByLanguage.set(
-      stream.language,
-      currentViewers + stream.viewer_count
-    );
-  });
-  // serialize the map to an array of objects
-  return Array.from(viewersByGameAndLanguage).map(
-    ([gameId, viewersByLanguage]) => ({
-      gameId,
-      viewersByLanguage: Array.from(viewersByLanguage).map(
-        ([language, viewerCount]) => ({ language, viewerCount })
-      ),
-    })
-  );
-}
-
-export function getViewersByLanguage(streams: Stream[]) {
+export function getViewersByLanguage(streams: Stream[]): [string, number][] {
   const viewersByLanguage: Map<string, number> = new Map();
   streams.forEach((stream) => {
     const currentViewers = viewersByLanguage.get(stream.language) || 0;
@@ -63,8 +34,8 @@ export function getViewersByLanguage(streams: Stream[]) {
     );
   });
   // serialize the map to an array of objects
-  return Array.from(viewersByLanguage).map(([language, viewerCount]) => ({
+  return Array.from(viewersByLanguage).map(([language, viewerCount]) => [
     language,
     viewerCount,
-  }));
+  ]);
 }
