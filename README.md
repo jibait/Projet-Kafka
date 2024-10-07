@@ -2,7 +2,7 @@
 
 Projet Kafka ESIEA 2024-2025
 
-Ce projet a été réalisé dans le cadre du cours de programmation en temps réel de 3ème année de cycle ingénieur de l'ESIEA. Il regroupe l'utilisation de plusieurs technologies :
+Ce projet a été réalisé dans le cadre du cours de programmation en temps réel de 3ème année de cycle ingénieur de l'ESIEA.
 
 L'objectif de ce projet est de mettre en place une architecture de traitement de données en temps réel.
 Le sujet que nous avons choisi est le suivant : "Un site web permettant de visualiser les statistiques des streams Twitch en cours en temps réel".
